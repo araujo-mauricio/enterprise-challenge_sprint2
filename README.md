@@ -74,9 +74,8 @@ void loop() {
   delay(2000);
 }
 
----
-
-## Análise Exploratória Inicial
+```
+## Análise Exploratório Inicial
 
 O gráfico abaixo representa a variação simulada da temperatura ao longo do tempo, coletada virtualmente a partir do sensor DHT22.
 Essa visualização permite entender o comportamento do sistema em cenários críticos (ex: temperaturas acima de 30 °C), que disparam os alertas visuais e sonoros.
@@ -88,7 +87,7 @@ Os dados foram salvos em .csv e representados graficamente.
 ![Gráfico](grafico/analise_inicial.png)
 
 
-### Insight Inicial:
+## Insight Inicial:
 Durante o monitoramento, foi observado que altos níveis de vibração coincidem com aumentos de temperatura, indicando risco de superaquecimento da seladora. Essa correlação pode alimentar futuros modelos preditivos.
 
 ---
