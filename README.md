@@ -5,7 +5,7 @@ Esta entrega dá continuidade ao projeto **AgroGuard**, iniciado na Sprint 1, qu
 
 ---
 
-## Objetivo da Sprint 2
+## Objetivo
 Simular um circuito funcional com **ESP32 e sensores virtuais** que representem situações reais de falha em equipamentos agroindustriais. A coleta e leitura dos dados permitirão realizar uma primeira análise exploratória do processo, validando a proposta do sistema AgroGuard.
 
 ---
@@ -75,7 +75,7 @@ void loop() {
 }
 
 ```
-## Análise Exploratório Inicial
+## Análise Exploratória Inicial
 
 O gráfico abaixo representa a variação simulada da temperatura ao longo do tempo, coletada virtualmente a partir do sensor DHT22.
 Essa visualização permite entender o comportamento do sistema em cenários críticos (ex: temperaturas acima de 30 °C), que disparam os alertas visuais e sonoros.
