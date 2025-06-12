@@ -25,7 +25,7 @@ Simular um circuito funcional com **ESP32 e sensores virtuais** que representem 
 - Cada sensor foi configurado para simular os comportamentos esperados.
 - A leitura dos dados é exibida via Serial.println().
 
-> ![Circuito Simulado](docs/circuito_simulado.png)
+> ![Circuito Simulado](docs/print_circuito.png)
 
 ---
 
