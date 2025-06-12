@@ -93,19 +93,22 @@ Durante o monitoramento, foi observado que altos níveis de vibração coincidem
 ---
 
 ## Estrutura do Repositório
-
+```
 enterprise-challenge_sprint2/
-├── docs/
-│ └── circuito_simulado.png
 ├── code/
-│ └── agroguard_esp32.ino
+│   └── agroguard_esp32.ino
 ├── data/
-│ └── dados_coletados.csv
+│   └── dados_coletados.csv
+├── docs/
+│   └── print_circuito.png
 ├── grafico/
-│ └── analise_inicial.png
-└── README.md
+│   └── analise_inicial.png
+├── diagram.json
+├── libraries.txt
+├── README.md
+└── wokwi-project.txt
 
----
+```
 
 ## Conclusão
 
