@@ -105,6 +105,7 @@ enterprise-challenge_sprint2/
 │ └── analise_inicial.png
 └── README.md
 
+---
 
 ## Conclusão
 
