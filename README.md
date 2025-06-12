@@ -1,12 +1,12 @@
 # Enterprise Challenge – Sprint 2 – Reply
 
 ## Continuidade da Sprint 1
-Esta entrega dá continuidade ao projeto **AgroGuard**, iniciado na Sprint 1, com foco na antecipação de falhas em equipamentos de linha de produção agroindustrial (esteiras, seladoras e sensores de peso). Após termos definido a arquitetura digital, nesta fase evoluímos para a **simulação prática da coleta de dados em tempo real**, validando parte operacional do sistema.
+Esta entrega dá continuidade ao projeto **AgroGuard**, iniciado na Sprint 1, que visa antecipar falhas em equipamentos de linha de produção agroindustrial (como esteiras, seladoras e sensores de peso). Agora, evoluímos da arquitetura digital teórica para a **simulação prática da coleta de dados em tempo real**, representando um processo industrial digitalizado.
 
 ---
 
 ## Objetivo da Sprint 2
-Simular um circuito funcional com **ESP32 e sensores virtuais** que representem situações reais de falha em equipamentos agroindustriais. A coleta e leitura dos dados permitirá realizar uma primeira análise exploratória do processo, reforçando a base para futuras aplicações preditivas com IA dentro do sistema AgroGuard.
+Simular um circuito funcional com **ESP32 e sensores virtuais** que representem situações reais de falha em equipamentos agroindustriais. A coleta e leitura dos dados permitirão realizar uma primeira análise exploratória do processo, validando a proposta do sistema AgroGuard.
 
 ---
 
@@ -23,9 +23,9 @@ Simular um circuito funcional com **ESP32 e sensores virtuais** que representem 
 ## Montagem do Circuito
 - A montagem foi feita na plataforma **Wokwi** com ESP32.
 - Cada sensor foi configurado para simular os comportamentos esperados.
-- A leitura dos dados é exibida via `Serial.println()`.
+- A leitura dos dados é exibida via Serial.println().
 
-> ![Circuito Simulado](docs/print_circuito.png)
+> ![Circuito Simulado](docs/circuito_simulado.png)
 
 ---
 
@@ -38,12 +38,16 @@ Simular um circuito funcional com **ESP32 e sensores virtuais** que representem 
 #define DHTTYPE DHT22
 DHT dht(DHTPIN, DHTTYPE);
 
-const int vibPin = 34;    // Potenciômetro
-const int pesoPin = 35;   // LDR
+const int vibPin = 34;
+const int pesoPin = 35;
+const int ledPin = 32;
+const int buzzerPin = 25;
 
 void setup() {
   Serial.begin(115200);
   dht.begin();
+  pinMode(ledPin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
 }
 
 void loop() {
@@ -59,129 +63,57 @@ void loop() {
   Serial.print(" | Vibração (%): "); Serial.print(vib);
   Serial.print(" | Peso (kg): "); Serial.println(pesoSimulado);
 
+  if (temp > 30 || vib > 70) {
+    digitalWrite(ledPin, HIGH);
+    digitalWrite(buzzerPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+    digitalWrite(buzzerPin, LOW);
+  }
+
   delay(2000);
 }
-```
 
-## Dados Coletados e Gráfico
-- Foram realizadas 20 simulações de leitura.
-- Os dados foram salvos em `.csv` e representados graficamente.
+---
 
-> ![Gráfico Análise Inicial](grafico/analise_inicial.png)
+## Análise Exploratória Inicial
+
+O gráfico abaixo representa a variação simulada da temperatura ao longo do tempo, coletada virtualmente a partir do sensor DHT22.
+Essa visualização permite entender o comportamento do sistema em cenários críticos (ex: temperaturas acima de 30 °C), que disparam os alertas visuais e sonoros.
+
+Foram realizadas 20 simulações de leitura.
+
+Os dados foram salvos em .csv e representados graficamente.
+
+![Gráfico](grafico/analise_inicial.png)
+
 
 ### Insight Inicial:
-Durante o monitoramento, foi observado que altos níveis de **vibração coincidem com aumentos de temperatura**, indicando risco de superaquecimento da seladora. Essa correlação reforça a importância de múltiplos sensores e pode alimentar futuros modelos preditivos do AgroGuard.
-
-> ⚠️ Os dados coletados nesta simulação serão utilizados nas próximas etapas do projeto para treinar modelos de Machine Learning, permitindo que o AgroGuard antecipe falhas com maior precisão.
+Durante o monitoramento, foi observado que altos níveis de vibração coincidem com aumentos de temperatura, indicando risco de superaquecimento da seladora. Essa correlação pode alimentar futuros modelos preditivos.
 
 ---
 
-## Estrutura do Repositório (Sprint 2)
-```
-enterprise-challenge/
-├── sprint2/
-│   ├── docs/
-│   │   └── print_circuito.png
-│   ├── code/
-│   │   └── agroguard_esp32.ino
-│   ├── data/
-│   │   └── dados_coletados.csv
-│   ├── grafico/
-│   │   └── analise_inicial.png
-│   └── README.md
-```
+## Estrutura do Repositório
 
----
+enterprise-challenge_sprint2/
+├── docs/
+│ └── circuito_simulado.png
+├── code/
+│ └── agroguard_esp32.ino
+├── data/
+│ └── dados_coletados.csv
+├── grafico/
+│ └── analise_inicial.png
+└── README.md
+
 
 ## Conclusão
-A Sprint 2 representa uma evolução concreta do AgroGuard, saindo do planejamento para uma **simulação realista da coleta de dados**. Esses dados alimentam a etapa futura de análise preditiva com IA, permitindo antecipação de falhas e maior segurança no processo industrial agroalimentar.
 
-> *Próximo passo: integrar esse sistema a modelos de IA e visualização em dashboards.*
-
-# AgroGuard ESP32 — Sistema de Monitoramento Agrícola com Alertas
-
-Projeto desenvolvido para monitoramento de temperatura, umidade, vibração e peso simulado em ambientes agrícolas, utilizando ESP32, sensores e alertas visuais e sonoros.
-
-## Visão Geral
-
-O sistema é composto por:
-- Sensor DHT22 para leitura de temperatura e umidade
-- Potenciômetro simulando vibração de esteira
-- Fotoresistor simulando sensor de peso
-- LED para alerta visual
-- Buzzer para alerta sonoro
-
-Quando a temperatura ultrapassa 30 °C ou a vibração atinge mais de 70%, o sistema ativa o LED e o buzzer como forma de sinalização imediata.
+A Sprint 2 representa uma evolução concreta do AgroGuard, saindo do planejamento para uma simulação realista da coleta de dados. Esses dados alimentam a etapa futura de análise preditiva com IA, permitindo antecipação de falhas e maior segurança no processo industrial agroalimentar.
 
 ---
 
-## Componentes Utilizados
+## Integrantes
 
-| Componente        | Descrição                                |
-|-------------------|-------------------------------------------|
-| ESP32             | Microcontrolador principal                |
-| DHT22             | Sensor de temperatura e umidade           |
-| Potenciômetro     | Simula vibração mecânica                  |
-| Fotoresistor (LDR)| Simula sensor de peso                     |
-| LED vermelho      | Alerta visual                             |
-| Buzzer            | Alerta sonoro                             |
-| Resistor 1kΩ      | Ligado ao LED para limitar corrente       |
-
----
-
-## Conexões dos Componentes
-
-| Componente   | Pino ESP32 |
-|--------------|------------|
-| DHT22 (DATA) | 15         |
-| Potenciômetro (SIG) | 34  |
-| Fotoresistor (AO) | 35    |
-| LED (ânodo)  | 32         |
-| Resistor do LED (cátodo ao GND) | - |
-| Buzzer       | 19         |
-
----
-
-## Bibliotecas Utilizadas
-
-As bibliotecas são automaticamente reconhecidas pelo Wokwi com base nos includes do código. No projeto, a seguinte biblioteca foi utilizada com sucesso:
-
-Wokwi Library List
-See https://docs.wokwi.com/guides/libraries
-Automatically added based on includes:
-DHT sensor library
-
----
-
-## Condições de Alerta
-
-| Parâmetro     | Condição               | Ação Tomada                        |
-|---------------|------------------------|------------------------------------|
-| Temperatura   | Acima de 30 °C         | LED acende e buzzer toca           |
-| Vibração      | Acima de 70%           | LED acende e buzzer toca           |
-| Peso Simulado | Apenas monitoramento   | Nenhum alerta                      |
-
----
-
-## Observações
-
-- O projeto foi desenvolvido e testado no [Wokwi](https://wokwi.com/) com sucesso.
-- Os sensores simulados permitem testes em tempo real.
-- O buzzer gera um som contínuo simples (simulado no Wokwi).
-
----
-
-## Estrutura de Arquivos
-
-```
-📦 agroguard_esp32
-├── agroguard_esp32.ino     # Código-fonte principal
-├── diagram.json            # Esquema eletrônico do Wokwi
-├── libraries.txt           # Bibliotecas necessárias
-└── README.md               # Documentação do projeto
-```
-
-### Simulação Online
-
-Veja o AgroGuard em funcionamento no Wokwi:  
->> [Acesse a simulação no Wokwi](https://wokwi.com/projects/433340210648456193)
+- Mauricio Araújo – RM566040
+- Igor Herson – RM563980
